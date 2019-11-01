@@ -34,12 +34,12 @@ export default {
       return this.$store.state.title;
     }
   },
-  hook :{
+  hook: {
     render(context, options) {
       const i18n = createI18n(context.state.locale);
       options.i18n = i18n;
     }
   },
-  mounted() {},
+  mounted() { },
 };
 </script>

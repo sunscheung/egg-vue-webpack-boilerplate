@@ -1,11 +1,11 @@
-'use strict';
+"use strict";
 
 import {
   SET_ARTICLE_LIST,
   SET_ARTICLE_DETAIL,
   SET_SAVE_ARTICLE,
   DELETE_ARTICLE
-} from './mutation-type';
+} from "./mutation-type";
 
 const mutations = {
   [SET_ARTICLE_LIST](state, { list, total }) {

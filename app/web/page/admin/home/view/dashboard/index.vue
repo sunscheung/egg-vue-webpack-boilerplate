@@ -4,13 +4,12 @@
   </div>
 </template>
 <style>
-
 </style>
 <script type="text/babel">
-  import PanelGroup from '../../component/panel.vue'
-  export default {
-    components: {
-      PanelGroup
-    },
-  }
+import PanelGroup from '../../component/panel.vue'
+export default {
+  components: {
+    PanelGroup
+  },
+}
 </script>
