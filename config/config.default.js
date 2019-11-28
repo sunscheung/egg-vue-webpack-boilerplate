@@ -1,17 +1,21 @@
 const path = require('path');
 const fs = require('fs');
 module.exports = app => {
-  const exports = {};
+  /**
+   * built-in config
+   * @type {Egg.EggAppConfig}
+   **/
+  const config = exports = {};
 
-  exports.siteFile = {
+  config.siteFile = {
     '/favicon.ico': fs.readFileSync(path.join(app.baseDir, 'app/web/asset/images/favicon.ico'))
   };
 
-  exports.view = {
+  config.view = {
     cache: false
   };
 
-  exports.vuessr = {
+  config.vuessr = {
     layout: path.join(app.baseDir, 'app/web/view/layout.html'),
     renderOptions: {
       // 告诉 vue-server-renderer 去 app/view 查找异步 chunk 文件
@@ -19,21 +23,53 @@ module.exports = app => {
     }
   };
 
-  exports.logger = {
+  config.logger = {
     consoleLevel: 'DEBUG',
     dir: path.join(app.baseDir, 'logs')
   };
 
-  exports.static = {
+  config.static = {
     prefix: '/public/',
     dir: path.join(app.baseDir, 'public')
   };
 
-  exports.keys = '123456';
+  config.keys = '123456';
 
-  exports.middleware = [
+  config.middleware = [
     'access'
   ];
-
-  return exports;
+  config.security = {
+    csrf: {
+      ignore: '/api/*/*',
+    },
+  };
+  config.development = {
+    ignoreDirs: [ 'app/web' ],
+  };
+  // database
+  config.redis = {
+    client: {
+      host: process.env.EGG_REDIS_HOST || '127.0.0.1',
+      port: process.env.EGG_REDIS_PORT || 6379,
+      password: process.env.EGG_REDIS_PASSWORD || '',
+      db: process.env.EGG_REDIS_DB || '0',
+    },
+  };
+  config.default_page = 1;
+  config.default_limit = 20;
+  // add your user config here
+  const userConfig = {
+    // myAppName: 'egg',
+    view: {
+      defaultViewEngine: 'nunjucks',
+      mapping: {
+        // '.tpl': 'nunjucks',
+        '.njk': 'nunjucks',
+      },
+    },
+  };
+  return {
+    ...config,
+    ...userConfig,
+  };
 };
